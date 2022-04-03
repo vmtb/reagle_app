@@ -1,0 +1,4 @@
+
+class Ids{
+   String id='';
+}
