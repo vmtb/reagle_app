@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tp_uber/screens_driver/principal_d.dart';
 
 class CustomAlertDialog extends StatelessWidget {
   String message;

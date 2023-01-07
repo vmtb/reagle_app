@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:tp_uber/screens/transport_way.dart';
+import '../screens/mission_end.dart';
 import 'custom_text_field.dart';
 import 'dart:math';
 class SpecificationsPage extends StatefulWidget {
@@ -22,6 +22,17 @@ class _SpecificationsPageState extends State<SpecificationsPage> {
   DateTime date = DateTime.now();
   TimeOfDay time= TimeOfDay.now();
 
+  String dropdownvalue = 'Exploration';
+
+  // List of items in our dropdown menu
+  var items = [
+    'Exploration',
+    'Delivery',
+    'Item 3',
+    'Item 4',
+    'Item 5',
+  ];
+
   @override
   Widget build(BuildContext context) {
     return  Opacity(
@@ -31,28 +42,37 @@ class _SpecificationsPageState extends State<SpecificationsPage> {
           height: MediaQuery.of(context).size.height * 0.25,
           margin: EdgeInsets.only(bottom: 15),
           decoration: BoxDecoration(
-              color: Colors.white,
+              color: Colors.green,
               borderRadius: BorderRadius.all(Radius.circular(25))),
           child: ListView(
             children: [
+              SizedBox(height: 10,),
               Column(
                 children: [
-                  Text(
-                    'Départ',
-                    style: TextStyle(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 30,
-                        color: Colors.green),
+                  Row(
+                    children: [
+                      Text(
+                        'Départ',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 30,
+                            color: Colors.white),
+                      ),
+                      Text(widget.origin),
+                    ],
                   ),
-                  Text(widget.origin),
-                  Text(
-                    'Destination',
-                    style: TextStyle(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 30,
-                        color: Colors.green),
+                  Row(
+                    children: [
+                      Text(
+                        'Destination',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 30,
+                            color: Colors.white),
+                      ),
+                      Text(widget.destination),
+                    ],
                   ),
-                  Text(widget.destination),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
@@ -63,30 +83,36 @@ class _SpecificationsPageState extends State<SpecificationsPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      Text('Heure de départ'),
-                      Text( ': ${time.hour}:${time.minute}', style: TextStyle(fontWeight: FontWeight.bold),),
-                      ElevatedButton(onPressed: () async {
-                        TimeOfDay? tim=  await showTimePicker(
-                            context: context,
-                            initialTime: TimeOfDay.now());
-                        if(tim==null) return;
-                        setState(() {
-                          time=tim;
-                        });
-                      }, child: Text('Change')),
+                      Text('Mission Type'),
+                       DropdownButton(
+
+                        // Initial Value
+                        value: dropdownvalue,
+
+                        // Down Arrow Icon
+                        icon: const Icon(Icons.keyboard_arrow_down),
+
+                        // Array list of items
+                        items: items.map((String items) {
+                          return DropdownMenuItem(
+                            value: items,
+                            child: Text(items),
+                          );
+                        }).toList(),
+                        // After selecting the desired option,it will
+                        // change button value to selected value
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            dropdownvalue = newValue!;
+                          });
+                        },
+                      ),
                     ],
                   ),
                   SizedBox(height: 5,),
                   ElevatedButton(onPressed: () {
                     Navigator.push(context,
-                      MaterialPageRoute(builder: (context)=>TransportWay(
-                        distance: getDistanceFromLatLonInKm(widget.originCoord?.latitude,widget.originCoord?.longitude, widget.destinationCoord?.latitude, widget.destinationCoord?.longitude).toStringAsFixed(3),
-                        orderStatus: 'Pending...',
-                        orderId: '0x23f4J564',
-                        trajet: '${widget.origin} - ${widget.destination}',
-                        prices: calcPrice(getDistanceFromLatLonInKm(widget.originCoord?.latitude,widget.originCoord?.longitude, widget.destinationCoord?.latitude, widget.destinationCoord?.longitude)),
-                        startTime: time,
-                      ))
+                      MaterialPageRoute(builder: (context)=>MissionEnd())
                     );
                   }, child: Text('Suivant')),
                 ],

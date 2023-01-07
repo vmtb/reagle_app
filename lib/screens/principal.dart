@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:tp_uber/directions_repository.dart';
 import 'package:tp_uber/models/directions_model.dart';
-import 'package:tp_uber/services/user_services.dart';
 import 'package:tp_uber/widgets/specifications_page.dart';
-import '../widgets/CustomDrawer.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:tp_uber/models/new_user.dart';
+
 
 class Principal extends StatefulWidget {
   var data;
-  Principal(@required this.data);
+  Principal();
   @override
   _PrincipalState createState() => _PrincipalState();
 }
@@ -27,7 +24,7 @@ class _PrincipalState extends State<Principal> {
   late Directions? _info;
   final LatLng _center = const LatLng(6.4485200,2.3556600);
   String originAddress='touchez votre point de départ sur la carte';
-  String destinationAddress=' appuyer longuement sur le le point de destination';
+  String destinationAddress=' long Press to select destination';
   LatLng? originCoord;
   LatLng? destinationCoord;
 
@@ -43,10 +40,10 @@ class _PrincipalState extends State<Principal> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.black,
         centerTitle: true,
-        title: Text('TP-Uber', style: TextStyle(fontWeight: FontWeight.bold),),
+        title: Text('REAGLE', style: TextStyle(fontWeight: FontWeight.bold),),
       ),
-      drawer: CustomDrawer(widget.data),
       body: Stack(
         alignment: AlignmentDirectional.bottomCenter,
         children: [
