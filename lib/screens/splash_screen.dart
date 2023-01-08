@@ -1,8 +1,8 @@
 import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tp_uber/screens/principal.dart';
-
 
 class splash_screen extends StatefulWidget {
   const splash_screen({Key? key}) : super(key: key);
@@ -12,19 +12,15 @@ class splash_screen extends StatefulWidget {
 }
 
 class _splash_screenState extends State<splash_screen> {
-
-
   @override
-
-  void initState(){
+  void initState() {
     //loadUserInfo();
-    Timer(Duration(seconds: 3),
-            ()=>Navigator.pushReplacement(context,
-            MaterialPageRoute(builder:
-                (context) =>
-                    Principal()),
-            )
-        );
+    Timer(
+        const Duration(seconds: 4),
+        () => Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => Principal()),
+            ));
     super.initState();
   }
 
@@ -33,25 +29,35 @@ class _splash_screenState extends State<splash_screen> {
     return Scaffold(
       backgroundColor: Colors.black45,
       body: Center(
-        child: Container(
-          child: Column(
-            children: [
-              SizedBox(height: 400,),
-              Text('REAGLE',style: TextStyle(
+        child: Column(
+          children: const [
+            SizedBox(
+              height: 400,
+            ),
+            Text(
+              'REAGLE',
+              style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
                 fontSize: 40,
-              ),),
-              Text('Just choose your destination \n and let the drone do the rest',style: TextStyle(
+              ),
+            ),
+            Text(
+              'Just choose your destination \n and let the drone do the rest',
+              style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
                 fontSize: 10,
-              ),),
-          CircularProgressIndicator(),
-              Text('Waiting for drone connection...',style: TextStyle(color: Colors.white),)
-
-            ],
-          ),
+              ),
+            ),
+            SizedBox(height: 5,),
+            CircularProgressIndicator(),
+            SizedBox(height: 5,),
+            Text(
+              'Waiting for drone connection...',
+              style: TextStyle(color: Colors.white),
+            )
+          ],
         ),
       ),
     );

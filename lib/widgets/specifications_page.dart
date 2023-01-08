@@ -1,14 +1,16 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+
 import '../screens/mission_end.dart';
-import 'custom_text_field.dart';
-import 'dart:math';
 class SpecificationsPage extends StatefulWidget {
   String origin;
   String destination;
   LatLng? originCoord;
   LatLng? destinationCoord;
-SpecificationsPage({@required  this.origin='', @required this.destination='',@required this.originCoord, @required this.destinationCoord});
+
+  SpecificationsPage({@required  this.origin='', @required this.destination='',@required this.originCoord, @required this.destinationCoord});
 
   @override
   _SpecificationsPageState createState() => _SpecificationsPageState();
@@ -28,9 +30,9 @@ class _SpecificationsPageState extends State<SpecificationsPage> {
   var items = [
     'Exploration',
     'Delivery',
-    'Item 3',
-    'Item 4',
-    'Item 5',
+    'Image Data collection',
+    'Human Presence',
+    'Animal Presence'
   ];
 
   @override
@@ -39,83 +41,89 @@ class _SpecificationsPageState extends State<SpecificationsPage> {
       opacity: 0.9,
       child: Container(
           width: MediaQuery.of(context).size.width * 0.95,
-          height: MediaQuery.of(context).size.height * 0.25,
-          margin: EdgeInsets.only(bottom: 15),
-          decoration: BoxDecoration(
+          height: MediaQuery.of(context).size.height * 0.30,
+          margin: const EdgeInsets.only(bottom: 15),
+          decoration: const BoxDecoration(
               color: Colors.green,
               borderRadius: BorderRadius.all(Radius.circular(25))),
           child: ListView(
             children: [
-              SizedBox(height: 10,),
-              Column(
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        'Départ',
-                        style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 30,
-                            color: Colors.white),
-                      ),
-                      Text(widget.origin),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                        'Destination',
-                        style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 30,
-                            color: Colors.white),
-                      ),
-                      Text(widget.destination),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
+              const SizedBox(height: 10,),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Expanded(
+                          child: Text(
+                            'Select the destination and the mission of the drone',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 20,
+                                color: Colors.white),
+                          ),
+                        ),
+                        //const SizedBox(width: 10,),
+                        //Expanded(child: Text(widget.origin)),
+                      ],
+                    ),
+                    const SizedBox(height: 5,),
+                    const Divider(color: Colors.black,),
+                    const SizedBox(height: 10,),
+                    Row(
+                      children: [
+                        const Text(
+                          'Destination: ',
+                          style: TextStyle(
+                              fontWeight: FontWeight.w700,
+                              fontSize: 20,
+                              color: Colors.white),
+                        ),
+                        const SizedBox(width: 10,),
+                        Expanded(child: Text(widget.destination)),
+                      ],
+                    ),
+                    const SizedBox(height: 5,),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        const Text('Mission Type'),
+                         DropdownButton(
 
-                    ],
-                  ),
-                  SizedBox(height: 5,),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Text('Mission Type'),
-                       DropdownButton(
+                          // Initial Value
+                          value: dropdownvalue,
 
-                        // Initial Value
-                        value: dropdownvalue,
+                          // Down Arrow Icon
+                          icon: const Icon(Icons.keyboard_arrow_down),
 
-                        // Down Arrow Icon
-                        icon: const Icon(Icons.keyboard_arrow_down),
-
-                        // Array list of items
-                        items: items.map((String items) {
-                          return DropdownMenuItem(
-                            value: items,
-                            child: Text(items),
-                          );
-                        }).toList(),
-                        // After selecting the desired option,it will
-                        // change button value to selected value
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            dropdownvalue = newValue!;
-                          });
-                        },
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 5,),
-                  ElevatedButton(onPressed: () {
-                    Navigator.push(context,
-                      MaterialPageRoute(builder: (context)=>MissionEnd())
-                    );
-                  }, child: Text('Suivant')),
-                ],
+                          // Array list of items
+                          items: items.map((String items) {
+                            return DropdownMenuItem(
+                              value: items,
+                              child: Text(items),
+                            );
+                          }).toList(),
+                          // After selecting the desired option,it will
+                          // change button value to selected value
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              dropdownvalue = newValue!;
+                            });
+                          },
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 5,),
+                    ElevatedButton(onPressed: () {
+                      Navigator.push(context,
+                        MaterialPageRoute(builder: (context)=>const MissionEnd())
+                      );
+                    }, child: const Text('Next'), style:ElevatedButton.styleFrom(primary: Colors.black,),),
+                  ],
+                ),
               ),
             ],
           )),

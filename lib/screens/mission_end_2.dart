@@ -1,6 +1,8 @@
 import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:tp_uber/screens/principal.dart';
 
 
@@ -17,7 +19,7 @@ class _MissionEnd2State extends State<MissionEnd2> {
   @override
 
   void initState(){
-    Timer(Duration(seconds: 3),
+    Timer(const Duration(seconds: 5),
             ()=>Navigator.pushReplacement(context,
           MaterialPageRoute(builder:
               (context) =>
@@ -32,17 +34,37 @@ class _MissionEnd2State extends State<MissionEnd2> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
-        child: Container(
-          child: Column(
-            children: [
-              SizedBox(height: 200,),
-              Text('Your mission is done!',style: TextStyle(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children:  [
+            SizedBox(
+              height: 80,
+              child: Center(
+                  child: Image.asset(
+                    '$kImagePath/icon_success.png',
+                    package: 'rflutter_alert',
+                  )),
+            ),
+            const SizedBox(height: 80,),
+            const Text('Your mission is done!',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+              fontSize: 40,
+            ),),
+            const SizedBox(height: 10,),
+            const Text('(The results have been sent to your email)',
+              textAlign: TextAlign.center,
+              style: TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.bold,
-                fontSize: 40,
+                fontSize: 14,
               ),),
-            ],
-          ),
+
+
+          ],
         ),
       ),
     );

@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tp_uber/screens/mission_end_2.dart';
@@ -17,11 +18,11 @@ class _MissionEndState extends State<MissionEnd> {
   @override
 
   void initState(){
-    Timer(Duration(seconds: 3),
+    Timer(const Duration(seconds: 6),
             ()=>Navigator.pushReplacement(context,
           MaterialPageRoute(builder:
               (context) =>
-              MissionEnd2()),
+              const MissionEnd2()),
         )
     );
     super.initState();
@@ -32,17 +33,21 @@ class _MissionEndState extends State<MissionEnd> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
-        child: Container(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
           child: Column(
-            children: [
-              SizedBox(height: 200,),
-              Text('Mission en cours...',style: TextStyle(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+              Text('Mission execution in progress...',
+                style: TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.bold,
                 fontSize: 40,
-              ),),
-              CircularProgressIndicator(),
 
+              ), textAlign: TextAlign.center,),
+              SizedBox(height: 10,),
+              CircularProgressIndicator(),
             ],
           ),
         ),

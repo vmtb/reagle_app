@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.tp_uber">
    <application
-        android:label="tp_uber"
+        android:label="REAGLE MOB"
         android:icon="@mipmap/ic_launcher">
        <meta-data android:name="com.google.android.geo.API_KEY"
            android:value="AIzaSyCh0bYF_CjGrMsCCmOiP1drmpOvYK4ymqs"/>
