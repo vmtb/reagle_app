@@ -6,7 +6,8 @@ import 'package:tp_uber/screens/mission_end_2.dart';
 
 
 class MissionEnd extends StatefulWidget {
-  const MissionEnd({Key? key}) : super(key: key);
+  final String position;
+  const MissionEnd({Key? key, required this.position}) : super(key: key);
 
   @override
   _MissionEndState createState() => _MissionEndState();
@@ -22,7 +23,7 @@ class _MissionEndState extends State<MissionEnd> {
             ()=>Navigator.pushReplacement(context,
           MaterialPageRoute(builder:
               (context) =>
-              const MissionEnd2()),
+                MissionEnd2( position: widget.position,)),
         )
     );
     super.initState();

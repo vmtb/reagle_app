@@ -9,8 +9,9 @@ class SpecificationsPage extends StatefulWidget {
   String destination;
   LatLng? originCoord;
   LatLng? destinationCoord;
+  String distance;
 
-  SpecificationsPage({@required  this.origin='', @required this.destination='',@required this.originCoord, @required this.destinationCoord});
+  SpecificationsPage({@required  this.origin='', required this.distance,  @required this.destination='',@required this.originCoord, @required this.destinationCoord});
 
   @override
   _SpecificationsPageState createState() => _SpecificationsPageState();
@@ -24,11 +25,12 @@ class _SpecificationsPageState extends State<SpecificationsPage> {
   DateTime date = DateTime.now();
   TimeOfDay time= TimeOfDay.now();
 
-  String dropdownvalue = 'Exploration';
+  String dropdownvalue = 'Unmanned landing test';
+
 
   // List of items in our dropdown menu
   var items = [
-    'Exploration',
+    'Unmanned landing test',
     'Delivery',
     'Image Data collection',
     'Human Presence',
@@ -41,7 +43,7 @@ class _SpecificationsPageState extends State<SpecificationsPage> {
       opacity: 0.9,
       child: Container(
           width: MediaQuery.of(context).size.width * 0.95,
-          height: MediaQuery.of(context).size.height * 0.30,
+          height: MediaQuery.of(context).size.height * 0.34,
           margin: const EdgeInsets.only(bottom: 15),
           decoration: const BoxDecoration(
               color: Colors.green,
@@ -76,7 +78,7 @@ class _SpecificationsPageState extends State<SpecificationsPage> {
                     Row(
                       children: [
                         const Text(
-                          'Destination: ',
+                          'Destination : ',
                           style: TextStyle(
                               fontWeight: FontWeight.w700,
                               fontSize: 20,
@@ -84,6 +86,20 @@ class _SpecificationsPageState extends State<SpecificationsPage> {
                         ),
                         const SizedBox(width: 10,),
                         Expanded(child: Text(widget.destination)),
+                      ],
+                    ),
+                    const SizedBox(height: 8,),
+                    Row(
+                      children: [
+                        const Text(
+                          'Distance : ',
+                          style: TextStyle(
+                              fontWeight: FontWeight.w700,
+                              fontSize: 16,
+                              color: Colors.white),
+                        ),
+                        const SizedBox(width: 10,),
+                        Expanded(child: Text(widget.distance)),
                       ],
                     ),
                     const SizedBox(height: 5,),
@@ -119,7 +135,7 @@ class _SpecificationsPageState extends State<SpecificationsPage> {
                     const SizedBox(height: 5,),
                     ElevatedButton(onPressed: () {
                       Navigator.push(context,
-                        MaterialPageRoute(builder: (context)=>const MissionEnd())
+                        MaterialPageRoute(builder: (context)=>  MissionEnd(position: widget.destination,))
                       );
                     }, child: const Text('Next'), style:ElevatedButton.styleFrom(primary: Colors.black,),),
                   ],

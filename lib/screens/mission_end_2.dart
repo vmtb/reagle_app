@@ -7,7 +7,8 @@ import 'package:tp_uber/screens/principal.dart';
 
 
 class MissionEnd2 extends StatefulWidget {
-  const MissionEnd2({Key? key}) : super(key: key);
+  final String position;
+  const MissionEnd2({Key? key, required this.position}) : super(key: key);
 
   @override
   _MissionEnd2State createState() => _MissionEnd2State();
@@ -54,8 +55,16 @@ class _MissionEnd2State extends State<MissionEnd2> {
               fontWeight: FontWeight.bold,
               fontSize: 40,
             ),),
+            const SizedBox(height: 5,),
+            Text('The drone successfully landed at ${widget.position}',
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                fontSize: 14,
+              ),),
             const SizedBox(height: 10,),
-            const Text('(The results have been sent to your email)',
+            const Text('(The report have been sent to your email)',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Colors.black,

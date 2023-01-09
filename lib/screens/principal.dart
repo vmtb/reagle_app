@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -15,16 +17,18 @@ class Principal extends StatefulWidget {
 
 class _PrincipalState extends State<Principal> {
   late GoogleMapController mapController;
-  Marker _origin = Marker(markerId: MarkerId('origin'));
-  Marker _destination = Marker(markerId: MarkerId('destination'));
+  Marker _destination = const Marker(markerId: MarkerId('destination'));
   late Directions? _info;
-  final LatLng _center = const LatLng(6.4485200, 2.3556600);
+  final LatLng _center = const LatLng(7.178622, 2.054885);  //7.178752, 2.054321
+  Marker _origin = const Marker(markerId: MarkerId('origin'), position: LatLng(7.178622, 2.054885),
+      infoWindow: InfoWindow(title: "Drone starting position"));
   String originAddress = '';
   String destinationAddress = ' Long Press to select destination';
   LatLng? originCoord;
   LatLng? destinationCoord;
 
   int balance = 0;
+  String distance = "";
 
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
@@ -36,9 +40,9 @@ class _PrincipalState extends State<Principal> {
       appBar: AppBar(
         backgroundColor: Colors.black,
         centerTitle: true,
-        title: Text(
+        title: const Text(
           'REAGLE',
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: const TextStyle(fontWeight: FontWeight.bold),
         ),
       ),
       body: Stack(
@@ -55,12 +59,12 @@ class _PrincipalState extends State<Principal> {
               zoomControlsEnabled: false,
               initialCameraPosition: CameraPosition(
                 target: _center,
-                zoom: 15.0,
+                zoom: 17.3,
               ),
               onLongPress: _addDestinationMarker,
-              onTap: _adddepartMarker,
+              //onTap: _adddepartMarker,
               markers: {
-                if (_origin != null) _origin,
+                _origin,
                 if (_destination != null) _destination
               },
               /* polylines: {
@@ -81,6 +85,7 @@ class _PrincipalState extends State<Principal> {
             origin: originAddress,
             destination: destinationAddress,
             originCoord: originCoord,
+            distance: distance,
             destinationCoord: destinationCoord,
           ),
           /*Positioned(
@@ -101,7 +106,7 @@ class _PrincipalState extends State<Principal> {
     setState(() {
       originCoord = pos;
       _origin = Marker(
-        markerId: MarkerId('origin'),
+        markerId: const MarkerId('origin'),
         infoWindow: InfoWindow(title: 'Départ: $originAddress'),
         icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
         position: pos,
@@ -115,7 +120,7 @@ class _PrincipalState extends State<Principal> {
     setState(() {
       destinationCoord = pos;
       _destination = Marker(
-        markerId: MarkerId('destination'),
+        markerId: const MarkerId('destination'),
         infoWindow: InfoWindow(title: destinationAddress),
         icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
         position: pos,
@@ -143,8 +148,19 @@ class _PrincipalState extends State<Principal> {
     print(placemarks);
     Placemark place = placemarks[0];
     setState(() {
-      destinationAddress =
-          '${place.street}, ${place.subLocality}, ${place.locality}, ${place.postalCode}, ${place.country}';
+      destinationAddress = '${place.street}, ${place.subLocality}, ${place.locality}, ${place.postalCode}, ${place.country}';
+      distance = "${(calculateDistance(_center.latitude, _center.longitude, mark.position.latitude, mark.position.longitude)*1000).toStringAsFixed(2)}m";
     });
   }
+
+
+  double calculateDistance(lat1, lon1, lat2, lon2){
+    var p = 0.017453292519943295;
+    var a = 0.5 - cos((lat2 - lat1) * p)/2 +
+        cos(lat1 * p) * cos(lat2 * p) *
+            (1 - cos((lon2 - lon1) * p))/2;
+    return 12742 * asin(sqrt(a));
+
+  }
+
 }
